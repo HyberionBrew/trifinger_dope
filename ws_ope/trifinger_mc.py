@@ -149,8 +149,8 @@ def main(_):
         image_obs = False,    # deactivate fetching images since large amounts of data
         visualization=False,  # enable visualization
     )
-    dataset = env.get_dataset() # pull the dataset
-    dataset.keys()
+    #dataset = env.get_dataset() # pull the dataset
+    #dataset.keys()
     
     # load the policy
     Policy = load_policy_class(FLAGS.trifinger_policy_class)
