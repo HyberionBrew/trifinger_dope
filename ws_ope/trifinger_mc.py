@@ -1,5 +1,6 @@
 import os
 import sys
+from absl import app
 module_path = os.path.abspath(os.path.join('trifinger_rl_datasets'))
 sys.path.insert(0, module_path)
 module_path = os.path.abspath(os.path.join('/app/ws/trifinger-rl-example'))
@@ -152,14 +153,19 @@ def main(_):
     dataset.keys()
     
     # load the policy
-    Policy = load_policy_class(FLAGS.policy_class)
+    Policy = load_policy_class(FLAGS.trifinger_policy_class)
     policy_config = Policy.get_policy_config()
     actor = Policy(env.action_space, env.observation_space, env.sim_env.episode_length)
     actor_wrap = TrifingerActor(actor, noisy= FLAGS.target_policy_noisy)
     ep_stats, rewards, infos = estimate_monte_carlo_returns(env, FLAGS.discount, actor_wrap,FLAGS.target_policy_std, FLAGS.num_mc_episodes)
     print(f"successes with low variance:  {count_successes(infos)}/{FLAGS.num_mc_episodes}")
     print("Mean return: ", ep_stats)
-    with open(f"{FLAGS.output_file}.pkl", 'wb') as f:
+    with open(f"data/{FLAGS.output_file}.pkl", 'wb') as f:
         pkl.dump(rewards, f)
         pkl.dump(ep_stats, f)
         pkl.dump(infos, f)
+
+
+if __name__ == '__main__':
+  app.run(main)
+
