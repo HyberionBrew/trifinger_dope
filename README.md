@@ -1,3 +1,11 @@
+# How to run
+
+First fetch submodules:
+```
+git submodule init 
+git submodule update
+```
+
 In order to execute anything first build the docker image in `docker/`:
 
 `docker build -t dope_demo .` 
@@ -11,7 +19,7 @@ Navigate to ws_ope: `cd /app/ws`
 
 # OPE 
 
-To run the OPE script (chose algo from [iw, dr, mb, dual_dice, fqe]):
+To run the OPE script (choose algo from [iw, dr, mb, dual_dice, fqe]):
 
 `python -m policy_eval.train_eval_trifinger --logtostderr --trifinger --env_name=trifinger-cube-push-real-mixed-v0 --trifinger_policy_class=trifinger_rl_example.example.TorchPushPolicy --target_policy_std=0.2 --nobootstrap --noise_scale=0.0 --num_updates=500000 --discount=0.995 --target_policy_noisy --algo=fqe `
 
