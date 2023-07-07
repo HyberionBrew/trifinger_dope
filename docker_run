@@ -1,0 +1,2 @@
+# !/bin/bash
+docker run --gpus all -it --rm -p 8888:8888 -v /mnt/hdd2/fabian/demo/ws_ope/:/app/ws demo_docker

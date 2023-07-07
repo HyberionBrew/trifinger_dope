@@ -1,0 +1,9 @@
+[submodule "ws_ope/policy_eval"]
+	path = ws_ope/policy_eval
+	url = https://github.com/HyberionBrew/policy_eval.git
+[submodule "ws_ope/trifinger_rl_datasets"]
+	path = ws_ope/trifinger_rl_datasets
+	url = https://github.com/rr-learning/trifinger_rl_datasets.git
+[submodule "ws_ope/trifinger-rl-example"]
+	path = ws_ope/trifinger-rl-example
+	url = https://github.com/rr-learning/trifinger-rl-example.git
