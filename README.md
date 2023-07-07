@@ -6,9 +6,12 @@ git submodule init
 git submodule update
 ```
 
-In order to execute anything first build the docker image in `docker/`:
+In order to execute anything first build the docker image:
 
-`docker build -t dope_demo .` 
+```
+cd docker
+docker build -t dope_demo .
+```
 
 
 Adapt the `docker_run`, but make it point to ws_ope, such that the scripts can find everything.
