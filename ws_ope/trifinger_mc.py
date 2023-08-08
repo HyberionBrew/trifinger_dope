@@ -36,6 +36,7 @@ flags.DEFINE_string('trifinger_policy_class', "trifinger_rl_example.example.Torc
 flags.DEFINE_float('target_policy_std', 0.1, 'Noise scale of target policy.')
 flags.DEFINE_bool('target_policy_noisy', False, 'inject noise into the actions of the target policy')
 
+
 # output file name
 flags.DEFINE_string('output_file', 'mc_returns', 'Output file name.')
 
@@ -157,13 +158,22 @@ def main(_):
     policy_config = Policy.get_policy_config()
     actor = Policy(env.action_space, env.observation_space, env.sim_env.episode_length)
     actor_wrap = TrifingerActor(actor, noisy= FLAGS.target_policy_noisy)
-    ep_stats, rewards, infos = estimate_monte_carlo_returns(env, FLAGS.discount, actor_wrap,FLAGS.target_policy_std, FLAGS.num_mc_episodes)
-    print(f"successes with low variance:  {count_successes(infos)}/{FLAGS.num_mc_episodes}")
-    print("Mean return: ", ep_stats)
-    with open(f"data/{FLAGS.output_file}.pkl", 'wb') as f:
-        pkl.dump(rewards, f)
-        pkl.dump(ep_stats, f)
-        pkl.dump(infos, f)
+    print(f"Output file: data/{FLAGS.output_file}")
+    
+    for i in range(FLAGS.num_mc_episodes//15):
+        sub_episodes = 15
+        ep_stats, rewards, infos = estimate_monte_carlo_returns(env, FLAGS.discount, actor_wrap,FLAGS.target_policy_std, sub_episodes)
+        #print(f"successes:  {count_successes(infos)}/{FLAGS.num_mc_episodes}")
+        # print("Mean return: ", ep_stats)
+
+        with open(f"data/{FLAGS.output_file}.pkl", 'ab') as f:
+            pkl.dump(rewards, f)
+            pkl.dump(ep_stats, f)
+            pkl.dump(count_successes(infos), f)
+            #print("dumped")
+
+            # pkl.dump(count_successes(infos), f)
+            #pkl.dump(infos, f)
 
 
 if __name__ == '__main__':
